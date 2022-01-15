@@ -1,7 +1,5 @@
-use std::fmt::format;
-
 use camino::Utf8PathBuf;
-use rustyline::Editor;
+use rustyline::{error::*, Editor};
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -30,8 +28,8 @@ fn run_prompt() {
 
         match line {
             Ok(line) => run(line),
-            Err(rustyline::error::ReadlineError::Interrupted) => break,
-            Err(rustyline::error::ReadlineError::Eof) => break,
+            Err(ReadlineError::Interrupted) => break,
+            Err(ReadlineError::Eof) => break,
             Err(err) => {
                 eprintln!("Error: {}", err)
             }
