@@ -1,4 +1,4 @@
-* Brine
+* 🧂 Brine
 
 A Rust implementation of the "Lox" interpreter from the book [[https://craftinginterpreters.com][ /Crafting Interpreters]]/.
 
