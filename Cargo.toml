@@ -2,7 +2,7 @@
 name = "brine"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Pawan Dubey"]
+description = "Implementation of the Lox interpreter from Crafting Interpreters, in Rust"
 
 [dependencies]
