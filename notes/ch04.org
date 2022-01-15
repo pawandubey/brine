@@ -13,5 +13,4 @@ Python and Haskell have significant leading whitespace syntax and nestable comme
 **** Pass comments to transpilation source
 
 *** Add support to Lox’s scanner for C-style /* ... */ block comments. Make sure to handle newlines in them. Consider allowing them to nest. Is adding support for nesting more work than you expected? Why?
-
-**** The nested comments make it irregular, so it's harder to parse
+The nested comments make it irregular, so it's harder to parse
