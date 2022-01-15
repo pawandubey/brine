@@ -2,6 +2,8 @@ use camino::Utf8PathBuf;
 use rustyline::{error::*, Editor};
 use structopt::StructOpt;
 
+mod tree_walk;
+
 #[derive(Debug, StructOpt)]
 #[structopt()]
 struct Options {
@@ -42,5 +44,5 @@ fn run_file(file: &Utf8PathBuf) {
 }
 
 fn run(source: String) {
-    println!("{}", source)
+    tree_walk::TreeWalk::new().run(source)
 }
