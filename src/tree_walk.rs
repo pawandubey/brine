@@ -98,7 +98,8 @@ impl<'a> Scanner<'a> {
         let mut chars = source.char_indices().peekable();
         let mut tokens = Vec::<Token>::new();
 
-        while let Some((_idx, ch)) = chars.next() {
+        while let Some((idx, ch)) = chars.next() {
+            let mut end_idx = idx;
             let token_type = match ch {
                 '(' => Some(TokenType::LeftParen),
                 ')' => Some(TokenType::RightParen),
@@ -110,13 +111,52 @@ impl<'a> Scanner<'a> {
                 '+' => Some(TokenType::Plus),
                 '*' => Some(TokenType::Star),
                 ';' => Some(TokenType::Semicolon),
+                '!' => {
+                    if let Some((_, '=')) = chars.peek() {
+                        end_idx += 1;
+                        chars.next();
+                        Some(TokenType::BangEqual)
+                    } else {
+                        Some(TokenType::Bang)
+                    }
+                }
+                '=' => {
+                    if let Some((_, '=')) = chars.peek() {
+                        end_idx += 1;
+                        chars.next();
+                        Some(TokenType::DoubleEqual)
+                    } else {
+                        Some(TokenType::Equal)
+                    }
+                }
+                '<' => {
+                    if let Some((_, '=')) = chars.peek() {
+                        end_idx += 1;
+                        chars.next();
+                        Some(TokenType::LessThanEqual)
+                    } else {
+                        Some(TokenType::LessThan)
+                    }
+                }
+                '>' => {
+                    if let Some((_, '=')) = chars.peek() {
+                        end_idx += 1;
+                        chars.next();
+                        Some(TokenType::GreaterThanEqual)
+                    } else {
+                        Some(TokenType::GreaterThan)
+                    }
+                }
                 _ => None,
             };
+
+            end_idx += 1;
+
             if let Some(token_type) = token_type {
-                tokens.push(Token {
-                    token_type,
-                    lexeme: ch.to_string(),
-                })
+                let lexeme = source.get(idx..end_idx).unwrap().to_string();
+                tokens.push(Token { token_type, lexeme });
+            } else {
+                println!("Unexpected character: {}", ch)
             }
         }
 
