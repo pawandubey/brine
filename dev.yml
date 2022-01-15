@@ -1,0 +1,7 @@
+name: brine
+
+type: rust
+
+up:
+  - rust:
+      version: 1.57.0
