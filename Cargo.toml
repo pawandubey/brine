@@ -6,3 +6,7 @@ authors = ["Pawan Dubey"]
 description = "Implementation of the Lox interpreter from Crafting Interpreters, in Rust"
 
 [dependencies]
+structopt = "0.3.25"
+camino = "1.0.5"
+exitcode = "1.1.2"
+rustyline = "9.1.2"
