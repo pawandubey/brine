@@ -1,0 +1,7 @@
+* Reference Notes
+
+This directory contains chapter-wise notes for the /Crafting Interpreters/ book by Bob Nystrom.
+
+** TOC
+
+*** [[file:ch04.org][Chapter 4: Scanning]]
