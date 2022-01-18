@@ -19,6 +19,7 @@ jobs:
           path: |
             ./craftinginterpreters
             /home/runner/.pub-cache
+            /opt/hostedtoolcache/dart-sdk/bin
           key: craftinginterpreters
 
       - name: Clone Dart
@@ -29,12 +30,9 @@ jobs:
           path: craftinginterpreters
 
       - uses: dart-lang/setup-dart@v1
+        if: steps.dart-cache.outputs.cache-hit != 'true'
 
       - name: Build Dart Tooling
         if: steps.dart-cache.outputs.cache-hit != 'true'
         run: make get
         working-directory: craftinginterpreters
-
-      - name: Dart installation check
-        id: dart-install-check
-        run: which dart
