@@ -12,7 +12,15 @@ jobs:
       - name: Build Brine
         run: cargo build --verbose
 
+      - name: Dart Tooling Cache
+        id: dart-cache
+        uses: actions/cache@v2
+        with:
+          path: ./craftinginterpreters
+          key: craftinginterpreters
+
       - name: Clone Dart
+        if: steps.dart-cache.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
         with:
             repository: munificent/craftinginterpreters
