@@ -12,7 +12,7 @@ jobs:
       - name: Build Brine
         run: cargo build --verbose
 
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Clone Dart
         with:
           repository: munificent/craftinginterpreters
