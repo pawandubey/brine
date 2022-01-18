@@ -21,10 +21,6 @@ jobs:
             /home/runner/.pub-cache
           key: craftinginterpreters
 
-      - name: Dart installation check
-        id: dart-install-check
-        run: echo "::set-output name=dart-installed::$(which dart)"
-
       - name: Clone Dart
         if: steps.dart-cache.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
@@ -39,3 +35,7 @@ jobs:
         if: steps.dart-cache.outputs.cache-hit != 'true'
         run: make get
         working-directory: craftinginterpreters
+
+      - name: Dart installation check
+        id: dart-install-check
+        run: which dart
