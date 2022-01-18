@@ -8,15 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: Swatinem/rust-cache@v1
       - name: Build Brine
-        uses: Swatinem/rust-cache@v1
         run: cargo build --verbose
 
-      - name: Build dart tooling
         uses: actions/checkout@v2
+      - name: Clone Dart
         with:
           repository: munificent/craftinginterpreters
           path: craftinginterpreters
-        uses: dart-lang/setup-dart@v1
+
+      - uses: dart-lang/setup-dart@v1
+      - name: Build Dart Tooling
         run: make get
         working-directory: craftinginterpreters
