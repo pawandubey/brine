@@ -62,7 +62,9 @@ enum TokenType {
     Return,
 
     // Special
-    EOF,
+    NewLine,
+    Comment,
+    Eof,
 }
 
 impl Display for TokenType {
@@ -111,6 +113,21 @@ impl<'a> Scanner<'a> {
                 '+' => Some(TokenType::Plus),
                 '*' => Some(TokenType::Star),
                 ';' => Some(TokenType::Semicolon),
+                '\n' => Some(TokenType::NewLine),
+                '/' => {
+                    if let Some((_, '/')) = chars.peek() {
+                        // TODO: chars.next() while we get a newline or None
+                        while let Some(&(_, c)) = chars.peek() {
+                            if c == '\n' {
+                                break;
+                            }
+                            chars.next();
+                        }
+                        Some(TokenType::Comment)
+                    } else {
+                        Some(TokenType::Slash)
+                    }
+                }
                 '!' => {
                     if let Some((_, '=')) = chars.peek() {
                         end_idx += 1;
@@ -153,13 +170,19 @@ impl<'a> Scanner<'a> {
             end_idx += 1;
 
             if let Some(token_type) = token_type {
-                let lexeme = source.get(idx..end_idx).unwrap().to_string();
-                tokens.push(Token { token_type, lexeme });
+                match token_type {
+                    TokenType::Comment => {}
+                    TokenType::NewLine => {}
+                    _ => {
+                        let lexeme = source.get(idx..end_idx).unwrap().to_string();
+                        tokens.push(Token { token_type, lexeme });
+                    }
+                }
             } else {
                 println!("Unexpected character: {}", ch)
             }
         }
 
-        return tokens;
+        tokens
     }
 }
