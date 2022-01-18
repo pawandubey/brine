@@ -36,3 +36,6 @@ jobs:
         if: steps.dart-cache.outputs.cache-hit != 'true'
         run: make get
         working-directory: craftinginterpreters
+
+      - name: Run acceptance tests
+        run: true
