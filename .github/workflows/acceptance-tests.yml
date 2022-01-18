@@ -7,6 +7,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: Swatinem/rust-cache@v1
-      - name: Build
+
+      - name: Build Brine
+        uses: Swatinem/rust-cache@v1
         run: cargo build --verbose
+
+      - name: Dart tooling cache
+        id: dart-tooling-cache
+        uses: actions/cache@v2
+        with:
+          path: ./craftinginterpreters
+          key: craftinginterpreters-${{ github.ref }}
+
+      - name: Build dart tooling
+        if: steps.dart-tooling-cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@v2
+        with:
+          repository: munificent/craftinginterpreters
+          path: craftinginterpreters
+        uses: dart-lang/setup-dart@v1
+        run: make get
+        working-directory: craftinginterpreters
