@@ -23,7 +23,7 @@ jobs:
 
       - name: Dart installation check
         id: dart-install-check
-        run: "::set-output name=dart-installed::$(which dart)"
+        run: echo "::set-output name=dart-installed::$(which dart)"
 
       - name: Clone Dart
         if: steps.dart-cache.outputs.cache-hit != 'true'
