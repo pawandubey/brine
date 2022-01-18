@@ -25,11 +25,10 @@ jobs:
         if: steps.dart-cache.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
         with:
-            repository: munificent/craftinginterpreters
-            path: craftinginterpreters
+          repository: munificent/craftinginterpreters
+          path: craftinginterpreters
 
       - uses: dart-lang/setup-dart@v1
-        if: contains(steps.dart-install-check.outputs.dart-installed, 'dart')
 
       - name: Build Dart Tooling
         if: steps.dart-cache.outputs.cache-hit != 'true'
