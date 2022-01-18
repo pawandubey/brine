@@ -3,7 +3,7 @@ name: Lox Acceptance Tests
 on: [push]
 
 jobs:
-  test:
+  acceptance:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
