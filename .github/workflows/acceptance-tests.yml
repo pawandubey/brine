@@ -16,8 +16,14 @@ jobs:
         id: dart-cache
         uses: actions/cache@v2
         with:
-          path: ./craftinginterpreters
+          path: |
+            ./craftinginterpreters
+            /home/runner/.pub-cache
           key: craftinginterpreters
+
+      - name: Dart installation check
+        id: dart-install-check
+        run: "::set-output name=dart-installed::$(which dart)"
 
       - name: Clone Dart
         if: steps.dart-cache.outputs.cache-hit != 'true'
@@ -27,6 +33,9 @@ jobs:
             path: craftinginterpreters
 
       - uses: dart-lang/setup-dart@v1
+        if: contains(steps.dart-install-check.outputs.dart-installed, 'dart')
+
       - name: Build Dart Tooling
+        if: steps.dart-cache.outputs.cache-hit != 'true'
         run: make get
         working-directory: craftinginterpreters
