@@ -1,7 +1,6 @@
 * 🧂 Brine
 
-A Rust implementation of the "Lox" interpreter from the book [[https://craftinginterpreters.com][ /Crafting Interpreters]]/.
-
+🚧 WIP: A Rust implementation of the "Lox" interpreter from the book [[https://craftinginterpreters.com][ /Crafting Interpreters]]/.
 
 ** Notes
 
@@ -18,6 +17,9 @@ Requires that rustc and cargo are installed and available on the PATH.
   # Build
   cargo build
 
-  # Run main
+  # Run repl
   cargo run
+
+  # Run from source file
+  cargo run -- /path/to/file
 #+end_src
