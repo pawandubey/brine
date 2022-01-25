@@ -303,18 +303,6 @@ impl<'a> Scanner<'a> {
                         }
 
                         end_idx += 1;
-                        // } else if c == '.' {
-                        //     let mut chars_next = chars.clone();
-                        //     chars_next.next();
-                        //     if let Some(&(_, '0'..='9')) = chars_next.peek() {
-                        //         num_val.push(c);
-                        //         chars.next();
-                        //     } else {
-                        //         panic!("Cannot end number at decimal.")
-                        //     }
-                        // } else {
-                        //     break;
-                        // }
                     }
 
                     if let Some(&(_, '.')) = chars.peek() {
