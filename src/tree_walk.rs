@@ -68,12 +68,6 @@ enum TokenType {
     Eof,
 }
 
-impl Display for TokenType {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        Debug::fmt(&self, f)
-    }
-}
-
 struct TokenFormatter {
     tokens: Vec<Token>,
 }
@@ -90,15 +84,10 @@ impl Display for TokenFormatter {
     }
 }
 
+#[derive(Debug)]
 enum Value {
     String(String),
     Number(f64),
-}
-
-impl Debug for Value {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        Display::fmt(&self, f)
-    }
 }
 
 impl Display for Value {
@@ -125,19 +114,19 @@ impl Display for Token {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.token_type {
             TokenType::LeftParen => {
-                write!(f, "LEFT PAREN {} null", self.lexeme)
+                write!(f, "LEFT_PAREN {} null", self.lexeme)
             }
             TokenType::RightParen => {
-                write!(f, "RIGHT PAREN {} null", self.lexeme)
+                write!(f, "RIGHT_PAREN {} null", self.lexeme)
             }
             TokenType::LeftBrace => {
-                write!(f, "LEFT BRANCE {} null", self.lexeme)
+                write!(f, "LEFT_BRACE {} null", self.lexeme)
             }
             TokenType::RightBrace => {
-                write!(f, "RIGHT BRANCE {} null", self.lexeme)
+                write!(f, "RIGHT_BRACE {} null", self.lexeme)
             }
             TokenType::Comma => {
-                write!(f, "Comma {} null", self.lexeme)
+                write!(f, "COMMA {} null", self.lexeme)
             }
             TokenType::Dot => {
                 write!(f, "DOT {} null", self.lexeme)
@@ -164,22 +153,22 @@ impl Display for Token {
                 write!(f, "BANG {} null", self.lexeme)
             }
             TokenType::GreaterThan => {
-                write!(f, "GREATER THAN {} null", self.lexeme)
+                write!(f, "GREATER {} null", self.lexeme)
             }
             TokenType::LessThan => {
-                write!(f, "LESS THAN {} null", self.lexeme)
+                write!(f, "LESS {} null", self.lexeme)
             }
             TokenType::DoubleEqual => {
-                write!(f, "DOUBLE EQUAL {} null", self.lexeme)
+                write!(f, "EQUAL_EQUAL {} null", self.lexeme)
             }
             TokenType::BangEqual => {
-                write!(f, "BANG EQUAL {} null", self.lexeme)
+                write!(f, "BANG_EQUAL {} null", self.lexeme)
             }
             TokenType::GreaterThanEqual => {
-                write!(f, "GREATER THAN EQUAL {} null", self.lexeme)
+                write!(f, "GREATER_EQUAL {} null", self.lexeme)
             }
             TokenType::LessThanEqual => {
-                write!(f, "LESS THAN EQUAL {} null", self.lexeme)
+                write!(f, "LESS_EQUAL {} null", self.lexeme)
             }
             TokenType::String(_) => {
                 let val = self.value.as_ref().unwrap();
@@ -187,7 +176,7 @@ impl Display for Token {
             }
             TokenType::Number(_) => {
                 let val = self.value.as_ref().unwrap();
-                write!(f, "NUMBER {} {:?}", self.lexeme, val)
+                write!(f, "NUMBER {} {}", self.lexeme, val)
             }
             TokenType::Eof => {
                 write!(f, "EOF {} null", self.lexeme)
