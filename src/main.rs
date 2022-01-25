@@ -1,3 +1,5 @@
+use std::fs;
+
 use camino::Utf8PathBuf;
 use rustyline::{error::*, Editor};
 use structopt::StructOpt;
@@ -7,7 +9,7 @@ mod tree_walk;
 #[derive(Debug, StructOpt)]
 #[structopt()]
 struct Options {
-    #[structopt(short, long, help = "Path to source file")]
+    #[structopt(help = "Path to source file")]
     file: Option<Utf8PathBuf>,
 }
 
@@ -40,7 +42,8 @@ fn run_prompt() {
 }
 
 fn run_file(file: &Utf8PathBuf) {
-    println!("{}", file)
+    let source = fs::read_to_string(file).expect("Error reading file");
+    run(source)
 }
 
 fn run(source: String) {
