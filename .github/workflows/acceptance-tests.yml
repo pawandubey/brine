@@ -38,10 +38,10 @@ jobs:
         working-directory: craftinginterpreters
 
       - name: Run acceptance tests
-        run:
-          - pwd
-          - ls
-          - ls craftinginterpreters
+        run: |
+          pwd
+          ls
+          ls craftinginterpretersx
         env:
           BINARY_PATH: ./target/debug/brine
           DART_DIR: ./craftinginterpreters
