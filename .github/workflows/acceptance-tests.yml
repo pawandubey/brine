@@ -52,7 +52,7 @@ jobs:
         if: steps.dart-cache.outputs.cache-hit != 'true'
 
       - name: Export Path
-        if: steps.dart-cache.outputs.cache-hot == 'true'
+        if: steps.dart-cache.outputs.cache-hit == 'true'
         run: export PATH=/opt/hostedtoolcache/dart-sdk/bin:$PATH
 
       - name: Build Dart Tooling
