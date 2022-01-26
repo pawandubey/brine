@@ -38,4 +38,7 @@ jobs:
         working-directory: craftinginterpreters
 
       - name: Run acceptance tests
-        run: true
+        run: cargo test --test external_integration
+        env:
+          BINARY_PATH: ./target/debug/brine
+          DART_DIR: ./craftinginterpreters
