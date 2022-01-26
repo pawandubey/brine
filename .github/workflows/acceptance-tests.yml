@@ -12,18 +12,22 @@ jobs:
       - name: Build Brine
         run: cargo build --verbose
 
-      - name: Dart Tooling Cache
+      - name: Crafting Interpreters Cache
+        id: craftinginterpreters-cache
+        uses: actions/cache@v2
+        with:
+          path: ./craftinginterpreters
+          key: craftinginterpreters
+
+      - name: Dart Binary Cache
         id: dart-cache
         uses: actions/cache@v2
         with:
-          path: |
-            ./craftinginterpreters
-            /home/runner/.pub-cache
-            /opt/hostedtoolcache/dart-sdk/bin
-          key: craftinginterpreters
+          path: /opt/hostedtoolcache/dart-sdk/bin
+          key: dart-cache
 
-      - name: Clone Dart
-        if: steps.dart-cache.outputs.cache-hit != 'true'
+      - name: Clone Crafting Intepreters
+        if: steps.craftinginterpreters-cache.outputs.cache-hit != 'true'
         uses: actions/checkout@v2
         with:
           repository: munificent/craftinginterpreters
@@ -37,7 +41,7 @@ jobs:
 
       - name: Run acceptance tests
         run: |
-          dart tool/bin/test.dart chap04_scanning --interpreter /home/runner/work/brine/brine/target/debug/brine
+          BINARY_PATH=./target/debug/brine DART_DIR=./craftinginterpreters cargo test --test external_integration -- --show-output
         env:
           BINARY_PATH: ./target/debug/brine
           DART_DIR: ./craftinginterpreters
