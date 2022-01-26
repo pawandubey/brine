@@ -23,7 +23,9 @@ jobs:
         id: dart-cache
         uses: actions/cache@v2
         with:
-          path: /opt/hostedtoolcache/dart-sdk/bin
+          path: |
+            /opt/hostedtoolcache/dart-sdk/bin
+            /home/runner/.pub-cache
           key: dart-cache
 
       - name: Clone Crafting Intepreters
@@ -34,8 +36,10 @@ jobs:
           path: craftinginterpreters
 
       - uses: dart-lang/setup-dart@v1
+        if: steps.dart-cache.outputs.cache-hit != 'true'
 
       - name: Build Dart Tooling
+        if: steps.dart-cache.outputs.cache-hit != 'true'
         run: make get
         working-directory: craftinginterpreters
 
