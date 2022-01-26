@@ -39,7 +39,8 @@ jobs:
 
       - name: Run acceptance tests
         run: |
-          BINARY_PATH=./target/debug/brine DART_DIR=./craftinginterpreters cargo test --test external_integration -- --show-output
+          dart tool/bin/test.dart chap04_scanning --interpreter /home/runner/work/brine/brine/target/debug/brine
         env:
           BINARY_PATH: ./target/debug/brine
           DART_DIR: ./craftinginterpreters
+        working-directory: craftinginterpreters
