@@ -51,6 +51,10 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         if: steps.dart-cache.outputs.cache-hit != 'true'
 
+      - name: Export Path
+        if: steps.dart-cache.outputs.cache-hot == 'true'
+        run: export PATH=/opt/hostedtoolcache/dart-sdk/bin:$PATH
+
       - name: Build Dart Tooling
         if: steps.dart-pkg-cache.outputs.cache-hit != 'true'
         run: make get
