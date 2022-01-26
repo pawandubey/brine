@@ -41,7 +41,8 @@ jobs:
         run: |
           pwd
           ls
-          ls craftinginterpretersx
+          ls craftinginterpreters
+          file target/debug/brine
         env:
           BINARY_PATH: ./target/debug/brine
           DART_DIR: ./craftinginterpreters
