@@ -10,6 +10,9 @@ fn acceptance_test(chapter: &str) {
     let binary_path = fs::canonicalize(binary_path_var).unwrap();
     let dart_dir = fs::canonicalize(dart_dir_var).unwrap();
 
+    assert!(binary_path.exists());
+    assert!(dart_dir.exists());
+
     let original_dir = std::env::current_dir().expect("Failed to get pwd");
 
     std::env::set_current_dir(PathBuf::from(dart_dir)).expect("Failed to change directory");
