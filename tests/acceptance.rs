@@ -3,7 +3,7 @@ use std::{process::Command, path::PathBuf, fs};
 use test_case::test_case;
 
 #[test_case("chap04_scanning")]
-fn acceptance_test(chapter: &str) {
+fn acceptance_test_for(chapter: &str) {
     let binary_path_var = std::env::var("BINARY_PATH").expect("BINARY_PATH env var required");
     let dart_dir_var = std::env::var("DART_DIR").expect("DART_DIR env var required");
 
@@ -17,16 +17,12 @@ fn acceptance_test(chapter: &str) {
 
     std::env::set_current_dir(PathBuf::from(dart_dir)).expect("Failed to change directory");
 
-    let mut cmd = Command::new("dart");
-
-    cmd.arg("tool/bin/test.dart")
+    let output = Command::new("dart")
+        .arg("tool/bin/test.dart")
         .arg(chapter)
         .arg("--interpreter")
-        .arg(binary_path);
-
-    println!("Command: {:?}", cmd);
-
-    let output = cmd.output()
+        .arg(binary_path)
+        .output()
         .expect("Failed to execute command");
 
     std::env::set_current_dir(original_dir).expect("Failed to change directory");
