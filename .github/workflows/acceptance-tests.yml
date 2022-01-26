@@ -21,25 +21,25 @@ jobs:
           restore-keys: |
             craftinginterpreters
 
-      - name: Dart Binary Cache
-        id: dart-cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            /opt/hostedtoolcache/dart-sdk/bin
-          key: dart-cache
-          restore-keys: |
-            dart-cache
+      # - name: Dart Binary Cache
+      #   id: dart-cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       /opt/hostedtoolcache/dart-sdk/bin
+      #     key: dart-cache
+      #     restore-keys: |
+      #       dart-cache
 
-      - name: Dart Package Cache
-        id: dart-pkg-cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            /home/runner/.pub-cache
-          key: dart-pkg-cache-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: |
-            dart-pkg-cache-
+      # - name: Dart Package Cache
+      #   id: dart-pkg-cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       /home/runner/.pub-cache
+      #     key: dart-pkg-cache-${{ hashFiles('**/pubspec.lock') }}
+      #     restore-keys: |
+      #       dart-pkg-cache-
 
       - name: Clone Crafting Intepreters
         if: steps.craftinginterpreters-cache.outputs.cache-hit != 'true'
