@@ -40,7 +40,6 @@ jobs:
           key: dart-pkg-cache-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             dart-pkg-cache-
-        working-directory: craftinginterpreters
 
       - name: Clone Crafting Intepreters
         if: steps.craftinginterpreters-cache.outputs.cache-hit != 'true'
