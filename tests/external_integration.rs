@@ -12,6 +12,8 @@ fn acceptance_test(chapter: &str) {
 
     let original_dir = std::env::current_dir().expect("Failed to get pwd");
 
+    println!("{:?}", original_dir);
+
     std::env::set_current_dir(PathBuf::from(dart_dir)).expect("Failed to change directory");
 
     let mut cmd = Command::new("dart");
