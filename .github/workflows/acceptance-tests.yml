@@ -39,10 +39,7 @@ jobs:
 
       - name: Run acceptance tests
         run: |
-          pwd
-          ls
-          ls craftinginterpreters
-          file target/debug/brine
+          BINARY_PATH=./target/debug/brine DART_DIR=./craftinginterpreters cargo test --test external_integration -- --show-output
         env:
           BINARY_PATH: ./target/debug/brine
           DART_DIR: ./craftinginterpreters
