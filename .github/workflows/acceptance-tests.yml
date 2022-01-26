@@ -39,6 +39,7 @@ jobs:
 
       - name: Run acceptance tests
         run: |
+          make get
           dart tool/bin/test.dart chap04_scanning --interpreter /home/runner/work/brine/brine/target/debug/brine
         env:
           BINARY_PATH: ./target/debug/brine
