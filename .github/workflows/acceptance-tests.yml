@@ -18,6 +18,8 @@ jobs:
         with:
           path: ./craftinginterpreters
           key: craftinginterpreters
+          restore-keys: |
+            craftinginterpreters
 
       - name: Dart Binary Cache
         id: dart-cache
@@ -25,8 +27,20 @@ jobs:
         with:
           path: |
             /opt/hostedtoolcache/dart-sdk/bin
-            /home/runner/.pub-cache
           key: dart-cache
+          restore-keys: |
+            dart-cache
+
+      - name: Dart Package Cache
+        id: dart-pkg-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            /home/runner/.pub-cache
+          key: dart-pkg-cache-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            dart-pkg-cache-
+        working-directory: craftinginterpreters
 
       - name: Clone Crafting Intepreters
         if: steps.craftinginterpreters-cache.outputs.cache-hit != 'true'
@@ -39,7 +53,7 @@ jobs:
         if: steps.dart-cache.outputs.cache-hit != 'true'
 
       - name: Build Dart Tooling
-        if: steps.dart-cache.outputs.cache-hit != 'true'
+        if: steps.dart-pkg-cache.outputs.cache-hit != 'true'
         run: make get
         working-directory: craftinginterpreters
 
