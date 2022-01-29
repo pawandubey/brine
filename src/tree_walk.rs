@@ -68,6 +68,30 @@ enum TokenType {
     Eof,
 }
 
+impl TokenType {
+    fn for_word(word: &String) -> Option<TokenType> {
+        match word.as_str() {
+            "and" => Some(TokenType::And),
+            "or" => Some(TokenType::Or),
+            "if" => Some(TokenType::If),
+            "else" => Some(TokenType::Else),
+            "true" => Some(TokenType::True),
+            "false" => Some(TokenType::False),
+            "nil" => Some(TokenType::Nil),
+            "for" => Some(TokenType::For),
+            "while" => Some(TokenType::While),
+            "class" => Some(TokenType::Class),
+            "fun" => Some(TokenType::Fun),
+            "var" => Some(TokenType::Var),
+            "this" => Some(TokenType::This),
+            "super" => Some(TokenType::Super),
+            "print" => Some(TokenType::Print),
+            "return" => Some(TokenType::Return),
+            _ => Some(TokenType::Identifier),
+        }
+    }
+}
+
 struct TokenFormatter {
     tokens: Vec<Token>,
 }
@@ -177,6 +201,57 @@ impl Display for Token {
             TokenType::Number(_) => {
                 let val = self.value.as_ref().unwrap();
                 write!(f, "NUMBER {} {}", self.lexeme, val)
+            }
+            TokenType::And => {
+                write!(f, "AND {} null", self.lexeme)
+            }
+            TokenType::Or => {
+                write!(f, "OR {} null", self.lexeme)
+            }
+            TokenType::If => {
+                write!(f, "IF {} null", self.lexeme)
+            }
+            TokenType::Else => {
+                write!(f, "ELSE {} null", self.lexeme)
+            }
+            TokenType::True => {
+                write!(f, "TRUE {} null", self.lexeme)
+            }
+            TokenType::False => {
+                write!(f, "FALSE {} null", self.lexeme)
+            }
+            TokenType::Nil => {
+                write!(f, "NIL {} null", self.lexeme)
+            }
+            TokenType::For => {
+                write!(f, "FOR {} null", self.lexeme)
+            }
+            TokenType::While => {
+                write!(f, "WHILE {} null", self.lexeme)
+            }
+            TokenType::Class => {
+                write!(f, "CLASS {} null", self.lexeme)
+            }
+            TokenType::Fun => {
+                write!(f, "FUN {} null", self.lexeme)
+            }
+            TokenType::Var => {
+                write!(f, "VAR {} null", self.lexeme)
+            }
+            TokenType::This => {
+                write!(f, "THIS {} null", self.lexeme)
+            }
+            TokenType::Super => {
+                write!(f, "SUPER {} null", self.lexeme)
+            }
+            TokenType::Print => {
+                write!(f, "PRINT {} null", self.lexeme)
+            }
+            TokenType::Return => {
+                write!(f, "RETURN {} null", self.lexeme)
+            }
+            TokenType::Identifier => {
+                write!(f, "IDENTIFIER {} null", self.lexeme)
             }
             TokenType::Eof => {
                 write!(f, "EOF {} null", self.lexeme)
@@ -314,6 +389,20 @@ impl<'a> Scanner<'a> {
 
                     let num: f64 = num_val.parse().expect("Error parsing value as float");
                     Some(TokenType::Number(num))
+                }
+                'a'..='z' | 'A'..='Z' | '_' => {
+                    let mut identifier: String = Default::default();
+                    identifier.push(ch);
+
+                    while let Some(&(_, 'a'..='z' | 'A'..='Z' | '_' | '0'..='9')) = chars.peek() {
+                        if let Some((_, c)) = chars.next() {
+                            identifier.push(c);
+                        }
+
+                        end_idx += 1;
+                    }
+
+                    TokenType::for_word(&identifier)
                 }
                 _ => None,
             };
