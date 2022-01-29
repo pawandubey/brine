@@ -1,4 +1,4 @@
-use std::{process::Command, path::PathBuf, fs};
+use std::{env, fs, process::Command};
 
 use test_case::test_case;
 
@@ -13,9 +13,9 @@ fn acceptance_test_for(chapter: &str) {
     assert!(binary_path.exists());
     assert!(dart_dir.exists());
 
-    let original_dir = std::env::current_dir().expect("Failed to get pwd");
+    let original_dir = env::current_dir().expect("Failed to get pwd");
 
-    std::env::set_current_dir(PathBuf::from(dart_dir)).expect("Failed to change directory");
+    env::set_current_dir(dart_dir).expect("Failed to change directory");
 
     let output = Command::new("dart")
         .arg("tool/bin/test.dart")
@@ -25,7 +25,7 @@ fn acceptance_test_for(chapter: &str) {
         .output()
         .expect("Failed to execute command");
 
-    std::env::set_current_dir(original_dir).expect("Failed to change directory");
+    env::set_current_dir(original_dir).expect("Failed to change directory");
 
     println!("{}", String::from_utf8_lossy(&output.stdout));
 

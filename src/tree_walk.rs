@@ -69,8 +69,8 @@ enum TokenType {
 }
 
 impl TokenType {
-    fn for_word(word: &String) -> Option<TokenType> {
-        match word.as_str() {
+    fn for_word(word: &str) -> Option<TokenType> {
+        match word {
             "and" => Some(TokenType::And),
             "or" => Some(TokenType::Or),
             "if" => Some(TokenType::If),
@@ -262,12 +262,9 @@ impl Display for Token {
 }
 
 #[derive(Debug)]
-struct Scanner<'a> {
-    input: &'a str,
-    index: usize,
-}
+struct Scanner {}
 
-impl<'a> Scanner<'a> {
+impl<'a> Scanner {
     fn tokenize(source: String) -> Vec<Token> {
         let mut chars = source.char_indices().peekable();
         let mut tokens = Vec::<Token>::new();
