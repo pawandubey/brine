@@ -43,6 +43,7 @@ dependencies = [
  "rustyline",
  "structopt",
  "test-case",
+ "unicode-xid",
 ]
 
 [[package]]

@@ -10,6 +10,7 @@ structopt = "0.3.25"
 camino = "1.0.5"
 exitcode = "1.1.2"
 rustyline = "9.1.2"
+unicode-xid = "0.2.2"
 
 [dev-dependencies]
 test-case = "2.0.0-rc1"

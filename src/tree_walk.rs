@@ -1,4 +1,5 @@
 use std::fmt::{Debug, Display};
+use unicode_xid::UnicodeXID as uxid;
 
 pub(crate) struct TreeWalk {}
 
@@ -39,7 +40,7 @@ enum TokenType {
     LessThanEqual,
 
     // Literals
-    Identifier,
+    Identifier(String),
     String(String),
     Number(f64),
 
@@ -87,7 +88,7 @@ impl TokenType {
             "super" => Some(TokenType::Super),
             "print" => Some(TokenType::Print),
             "return" => Some(TokenType::Return),
-            _ => Some(TokenType::Identifier),
+            _ => Some(TokenType::Identifier(word.to_string())),
         }
     }
 }
@@ -250,7 +251,7 @@ impl Display for Token {
             TokenType::Return => {
                 write!(f, "RETURN {} null", self.lexeme)
             }
-            TokenType::Identifier => {
+            TokenType::Identifier(_) => {
                 write!(f, "IDENTIFIER {} null", self.lexeme)
             }
             TokenType::Eof => {
@@ -387,16 +388,20 @@ impl<'a> Scanner {
                     let num: f64 = num_val.parse().expect("Error parsing value as float");
                     Some(TokenType::Number(num))
                 }
-                'a'..='z' | 'A'..='Z' | '_' => {
+                _ if id_start(ch) => {
                     let mut identifier: String = Default::default();
                     identifier.push(ch);
 
-                    while let Some(&(_, 'a'..='z' | 'A'..='Z' | '_' | '0'..='9')) = chars.peek() {
-                        if let Some((_, c)) = chars.next() {
-                            identifier.push(c);
-                        }
+                    while let Some(&(_, c)) = chars.peek() {
+                        if uxid::is_xid_continue(c) {
+                            if let Some((_, c)) = chars.next() {
+                                identifier.push(c);
+                            }
 
-                        end_idx += 1;
+                            end_idx += 1;
+                        } else {
+                            break;
+                        }
                     }
 
                     TokenType::for_word(&identifier)
@@ -429,6 +434,14 @@ impl<'a> Scanner {
                             value,
                         })
                     }
+                    TokenType::Identifier(ref id) => {
+                        let lexeme = id.to_string();
+                        tokens.push(Token {
+                            token_type,
+                            lexeme,
+                            value: None,
+                        });
+                    }
                     _ => {
                         let lexeme = source.get(idx..end_idx).unwrap().to_string();
                         tokens.push(Token {
@@ -451,4 +464,8 @@ impl<'a> Scanner {
 
         tokens
     }
+}
+
+fn id_start(ch: char) -> bool {
+    ch == '_' || uxid::is_xid_start(ch)
 }
